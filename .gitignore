@@ -1,0 +1,28 @@
+# Local configuration files
+config.xml
+profanity.txt
+*.der
+*.pem
+
+# Local scripts
+*.sh
+*.bat
+
+# Logs
+logs
+
+# Payload data
+payload
+
+# Keys
+keys
+
+# Reload state
+state
+
+# Executables
+*.exe
+*.exe~
+
+# Editor files
+.vscode

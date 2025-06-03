@@ -1,0 +1,22 @@
+<Config>
+    <!-- The address the Payload Server will bind to -->
+    <payloadServerAddress>127.0.0.1:29997</payloadServerAddress>
+
+    <!-- Database Credentials -->
+    <username>username</username>
+    <password>password</password>
+
+    <!-- Database information -->
+    <databaseAddress>127.0.0.1</databaseAddress>
+    <databaseName>wwfc</databaseName>
+    
+    <!-- Logging configuration -->
+    <!-- Log verbosity
+         0: No messages are logged.
+         1: General messages are logged.
+         2: General and error messages are logged.
+         3: General, error, and warning messages are logged.
+         4: General, error, warning, and informational messages are logged.
+    -->
+    <logLevel>4</logLevel>
+</Config>
