@@ -288,30 +288,17 @@ func handlePayloadRequest(moduleName string, w http.ResponseWriter, r *http.Requ
 			return
 		}
 
+		hashQuery := r.URL.RawQuery
+		if len(hashQuery) < 8+3 || hashQuery[len(hashQuery)-8-3:] != "&h="+saltHashTest[0] {
+			// Salt hash must be at the end of the query string
+			logging.Error(moduleName, "Invalid salt hash in query")
+			replyBadRequest(w)
+			return
+		}
+		hashQuery = hashQuery[:len(hashQuery)-8-3]
+
 		// Generate the salt hash
-		saltHashData := "payload"
-		q := "?"
-		if cOk {
-			saltHashData += q + "c=" + channel[0]
-			q = "&"
-		}
-		if vOk {
-			saltHashData += q + "v=" + versionStr[0]
-			q = "&"
-		}
-		if kOk {
-			saltHashData += q + "k=" + keyId[0]
-			q = "&"
-		}
-		if deviceIdStr, ok := query["d"]; ok && len(deviceIdStr) == 1 {
-			saltHashData += q + "d=" + deviceIdStr[0]
-			q = "&"
-		}
-		if cfcStr, ok := query["f"]; ok && len(cfcStr) == 1 {
-			saltHashData += q + "f=" + cfcStr[0]
-			q = "&"
-		}
-		saltHashData += q + "g=" + query.Get("g") + "&s=" + query.Get("s")
+		saltHashData := "payload?" + hashQuery
 
 		hashCtx := sha256.New()
 		_, err = hashCtx.Write([]byte(saltHashData))
