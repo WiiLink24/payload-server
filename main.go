@@ -190,7 +190,7 @@ func handlePayloadRequest(moduleName string, w http.ResponseWriter, r *http.Requ
 
 	keyId, kOk := query["k"]
 	if !kOk {
-		keyId = []string{"0"} // Default to channel 0 if not provided
+		keyId = []string{"0"} // Default to key 0 if not provided
 	} else if len(keyId) != 1 || (keyId[0] != "0" && keyId[0] != "1") {
 		logging.Error(moduleName, "Invalid key ID parameter")
 		replyBadRequest(w)
@@ -460,6 +460,9 @@ func loadDeploymentConfig() bool {
 		logging.Error(moduleName, "Missing required channels: prod and beta must be defined")
 		return false
 	}
+
+	newDeployment["0"] = newDeployment["prod"]
+	newDeployment["1"] = newDeployment["beta"]
 
 	deployMutex.Lock()
 	deployment = newDeployment
