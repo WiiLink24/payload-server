@@ -26,3 +26,6 @@ state
 
 # Editor files
 .vscode
+
+# Binary
+payload-server
